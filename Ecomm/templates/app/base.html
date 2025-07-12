@@ -1,0 +1,262 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Gadget Zone</title>
+    <!--css-->
+    <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <!--css-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+
+
+
+
+
+    </script>
+    <script src="/static/js/jquery.min.js"></script>
+    <link href='//fonts.googleapis.com/css?family=Cagliostro' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,600italic,600,400italic,300italic,300'
+          rel='stylesheet' type='text/css'>
+    <!--search jQuery-->
+    <script src="/static/js/main.js"></script>
+    <!--search jQuery-->
+    <script src="/static/js/responsiveslides.min.js"></script>
+    <script>
+    $(function () {
+      $("#slider").responsiveSlides({
+      	auto: true,
+      	nav: true,
+      	speed: 500,
+        namespace: "callbacks",
+        pager: true,
+      });
+    });
+
+
+
+
+
+
+
+    </script>
+    <!--mycart-->
+    <script type="text/javascript" src="/static/js/bootstrap-3.1.1.min.js"></script>
+    <!-- cart -->
+    <script src="/static/js/simpleCart.min.js"></script>
+    <!-- cart -->
+    <script defer src="/static/js/jquery.flexslider.js"></script>
+    <link rel="stylesheet" href="/static/css/flexslider.css" type="text/css" media="screen"/>
+    <script src="/static/js/imagezoom.js"></script>
+    <script>
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails"
+  });
+
+  $.getJSON("loadcategories", function(data){
+       $.each(data, function (key, value) {
+        console.log(value['name']);
+        $('#categories').append('<li><a href="productscat?category='+ value['name'] + '">' + value['name'] + '</a></li>');
+        });
+    });
+
+  $.getJSON("loadbrands", function(data){
+       $.each(data, function (key, value) {
+        console.log(value['name']);
+        $('#brands').append('<li><a href="productsbrand?brand='+ value['name'] + '">' + value['name'] + '</a></li>');
+        });
+    });
+
+    $(window).scroll(function () {
+			if ($(this).scrollTop() > 50) {
+				$('#back-to-top').fadeIn();
+			} else {
+				$('#back-to-top').fadeOut();
+			}
+		});
+		// scroll body to 0px on click
+		$('#back-to-top').click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 400);
+			return false;
+		});
+});
+
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+{%csrf_token%}
+<!--header-->
+<div class="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="top-left">
+                <a href="#"> Help <i class="glyphicon glyphicon-phone" aria-hidden="true"></i> +91(2112)456-789</a>
+            </div>
+            <div class="top-right">
+                <ul>
+                    <li><a href="login">Login</a></li>
+                    <li><a href="registration"> Create Account </a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="heder-bottom">
+        <div class="container">
+            <div class="logo-nav">
+                <div class="logo-nav-left">
+                    <h1><a href="/">Gadget Zone <span>Shop anywhere</span></a></h1>
+                </div>
+                <div class="logo-nav-left1">
+                    <nav class="navbar navbar-default">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header nav_2">
+                            <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse"
+                                    data-target="#bs-megadropdown-tabs">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="/" class="act">Home</a></li>
+                                <!-- Mega Menu -->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b
+                                            class="caret"></b></a>
+                                    <ul class="dropdown-menu multi-column columns-3">
+                                        <div class="row">
+                                            <div class="col-sm-6  multi-gd-img">
+                                                <ul id="categories" class="multi-column-dropdown">
+                                                    <h6>Categories</h6>
+
+
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6  multi-gd-img">
+                                                <a href="products.html"><img src="/static/images/woo.jpg" alt=" "/></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brands<b
+                                            class="caret"></b></a>
+                                    <ul class="dropdown-menu multi-column columns-3">
+                                        <div class="row">
+                                            <div class="col-sm-6  multi-gd-img">
+                                                <ul id="brands" class="multi-column-dropdown">
+                                                    <h6>Brands</h6>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6  multi-gd-img">
+                                                <a href="products.html"><img src="/static/images/woo2.jpg" alt=" "/></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="header-right2">
+                    <div class="cart box_1">
+                        <a href="viewcart">
+                            <h3>
+                                <div class="total">
+                                    <span class="badge badge-danger">{{ request.session.cart_count }}(₹{{ request.session.cart_total }})</span>
+                                </div>
+                                <img src="/static/images/bag.png" alt=""/>
+                            </h3>
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--header-->
+{%block content%}
+{%endblock%}
+<!---footer--->
+<div class="footer-w3l">
+    <div class="container">
+        <div class="footer-grids">
+            <div class="col-md-4 footer-grid">
+                <h4>About </h4>
+                <p>Gadget Zone website will be provide a better shopping experience, interactive and easy
+                    interface so that buying process takes place smoothly.</p>
+                <div class="social-icon">
+                    <a href="#"><i class="icon"></i></a>
+                    <a href="#"><i class="icon1"></i></a>
+                    <a href="#"><i class="icon2"></i></a>
+                    <a href="#"><i class="icon3"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 footer-grid">
+                <h4>My Account</h4>
+                <ul>
+                    <li><a href="viewcart">Checkout</a></li>
+                    <li><a href="login">Login</a></li>
+                    <li><a href="registration"> Create Account </a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 footer-grid foot">
+                <h4>Contacts</h4>
+                <ul>
+                    <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i><a href="#">Gadget Zone Nira
+                        Rd,
+                        Malegoan 413 115</a></li>
+                    <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i><a href="#">+91(2112)456-789</a>
+                    </li>
+                    <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a
+                            href="mailto:contact@gadgetzone.com"> contact@gadgetzone.com</a></li>
+
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+</div>
+<!---footer--->
+<!--copy-->
+<div class="copy-section">
+    <div class="container">
+        <div class="copy-left">
+            <p>&copy; 2022-23 Gadget Zone . All rights reserved | Project by <a href="#">Team of Students</a></p>
+        </div>
+        <div class="copy-right">
+            <img src="/static/images/card.png" alt=""/>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!--copy-->
+<a id="back-to-top" href="#" class="btn btn-success" style="
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;" role="button"><i
+        class="fa fa-chevron-up"></i></a>

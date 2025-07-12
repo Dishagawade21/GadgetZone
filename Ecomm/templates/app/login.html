@@ -1,0 +1,46 @@
+{% extends "app/base.html" %}
+{% block content %}
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="/">Home</a> / <span>Login</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--login-->
+<div class="login">
+    <div class="main-agileits">
+        {% if message %}
+            <div class="alert alert-danger alert-dismissible slideUp=500">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Message: </strong>{{message}}
+            </div>
+            <script>
+                window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+                });
+            }, 4000);
+            </script>
+            {%endif%}
+        <div class="form-w3agile">
+            <h3>Login To New Shop</h3>
+            <form method="post">
+				{%csrf_token%}
+                <div class="key">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="email" name="email" placeholder="Email" required="">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" name="password" placeholder="Password" required="">
+                    <div class="clearfix"></div>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</div>
+<!--login-->
+{% endblock %}

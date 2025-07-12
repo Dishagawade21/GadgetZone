@@ -1,0 +1,121 @@
+{% extends "user/base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/bootstrap-select.css" type="text/css" />
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<script src="/static/js/bootstrap-select.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="home">Home</a> / <span>Contact</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--login-->
+<div class="login">
+    <div class="main-agileits">
+        {% if message %}
+        <div class="alert alert-{{class}} alert-dismissible slideUp=500">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Message: </strong>{{message}}
+        </div>
+        <script>
+            window.setTimeout(function () {
+                $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 4000);
+
+
+
+        </script>
+        {%endif%}
+        <div class="form-w3agile">
+            <h3>Contact Form</h3>
+            <form method="post">
+                {%csrf_token%}
+                <div class="form-group">
+                    <select name="pname" class="selectpicker form-control" data-live-search="true" required>
+                        <option value="">Select Product</option>
+                        {%for pname in pnames%}
+                        <option value="{{pname}}">{{pname}}</option>
+                        {%endfor%}
+                    </select>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <textarea name="message" placeholder="Write your message here" required=""></textarea>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- making changes from here -->
+
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star5"></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star4"></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3"></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2"></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1"></label>
+                </div>
+
+                <style>
+                    .star-rating {
+                        display: inline-block;
+                        direction: rtl;
+                    }
+
+                    .star-rating input[type="radio"] {
+                        display: none;
+                    }
+
+                    .star-rating label {
+                        cursor: pointer;
+                        width: 25px;
+                        height: 25px;
+                        margin: 0;
+                        padding: 0;
+                        font-size: 24px;
+                        color: #ccc;
+                        text-align: center;
+                        line-height: 25px;
+                        background-color: transparent;
+                    }
+
+                    .star-rating label:before {
+                        content: "\f005";
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: 900;
+                    }
+
+                    .star-rating input[type="radio"]:checked~label:before {
+                        content: "\f005";
+                        color: #f8ce0b;
+                    }
+                </style>
+
+
+                <!-- <label for="rating">Rate us:</label>
+                    <select id="rating" name="rating">
+                      <option value="1">1 star</option>
+                      <option value="2">2 stars</option>
+                      <option value="3">3 stars</option>
+                      <option value="4">4 stars</option>
+                      <option value="5">5 stars</option>
+                    </select> -->
+
+                <!-- till here -->
+                <input type="submit" value="Send">
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<!--login-->
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "user/base.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="static/css/jquery-ui.css">
+<script type="text/javascript" src="static/js/jquery-ui.js"></script>
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="home">Home</a> / <span>Products</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--content-->
+<div class="content">
+    <div class="products-agileinfo">
+        <h2 class="tittle">{{brand}}</h2>
+        <div class="container">
+            {% if message %}
+            <div class="alert alert-{{class}} alert-dismissible slideUp=500">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Message: </strong>{{message}}
+            </div>
+            <script>
+                window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+                });
+            }, 4000);
+
+
+
+
+
+
+
+            </script>
+            {%endif%}
+            <div class="product-agileinfo-grids w3l">
+                <div class="col-md-3 product-agileinfo-grid">
+                    <div class="categories">
+                        <h3>Categories</h3>
+                        <ul class="tree-list-pad">
+                            <li><input type="checkbox" checked="checked" id="item-0"/><label for="item-0"><span></span>{{brand}}</label>
+                                <ul>
+                                    {% for category, subcategories in categories.items %}
+                                    <li><input type="checkbox" id="item-0-{{ forloop.counter0 }}"/><label
+                                            for="item-0-{{ forloop.counter0 }}">{{category}}</label>
+                                        <ul>
+                                            {% for sub in subcategories %}
+                                            <li><a href="userproductsbrand?brand={{brand}}&category={{category}}&sub={{sub}}">{{sub}}</a>
+                                            </li>
+                                            {%endfor%}
+                                        </ul>
+                                    </li>
+                                    {%endfor%}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="price">
+                        <h3>Price Range</h3>
+                        <ul class="dropdown-menu6">
+                            <li>
+                                <div id="slider-range"></div>
+                                <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;"/>
+                            </li>
+                        </ul>
+                        <script type='text/javascript'>//<![CDATA[
+									$(window).load(function(){
+									 $( "#slider-range" ).slider({
+												range: true,
+												min: {{min}},
+												max: {{max}},
+												values: [ {{min_}},  {{max_}} ],
+												slide: function( event, ui ) { window.location.href = "userproductsbrand?brand={{brand}}&category={{category}}&sub={{sub}}&min=" + ui.values[ 0 ] + "&max=" + ui.values[ 1 ], $( "#amount" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
+												}
+									 });
+									$( "#amount" ).val( "₹" + $( "#slider-range" ).slider( "values", 0 ) + " - ₹" + $( "#slider-range" ).slider( "values", 1 ) );
+
+									});//]]>
+
+
+                        </script>
+
+                    </div>
+                    <hr>
+                    <div class="price">
+                        <h3>Discount Range</h3>
+                        <ul class="dropdown-menu6">
+                            <li>
+                                <div id="slider-range_"></div>
+                                <input type="text" id="discount"
+                                       style="border: 0; color: #ffffff; font-weight: normal;"/>
+                            </li>
+                        </ul>
+                        <script type='text/javascript'>//<![CDATA[
+									$(window).load(function(){
+									 $( "#slider-range_" ).slider({
+												range: true,
+												min: {{dmin}},
+												max: {{dmax}},
+												values: [ {{dmin_}},  {{dmax_}} ],
+												slide: function( event, ui ) { window.location.href = "userproductsbrand?brand={{brand}}&category={{category}}&sub={{sub}}&dmin=" + ui.values[ 0 ] + "&dmax=" + ui.values[ 1 ], $( "#discount" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
+												}
+									 });
+									$( "#discount" ).val($( "#slider-range_" ).slider( "values", 0 ) + "% - " + $( "#slider-range_" ).slider( "values", 1 ) +"%");
+
+									});//]]>
+
+
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-9 product-agileinfon-grid1 w3l">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home"
+                                 aria-labelledby="home-tab">
+                                <div class="product-tab">
+                                    {%for product in products%}
+                                    <div class="col-md-4 arrival-grid simpleCart_shelfItem">
+                                        <div class="grid-arr">
+                                            <div class="grid-arrival">
+                                                <figure>
+                                                    <a href="productdetails?pid={{product.id}}">
+                                                        <div class="grid-img">
+                                                            <img src="/media/products/{{product.id}}1.jpg"
+                                                                 class="img-responsive" alt="">
+                                                        </div>
+                                                        <div class="grid-img">
+                                                            <img src="/media/products/{{product.id}}1.jpg"
+                                                                 class="img-responsive" alt="">
+                                                        </div>
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                            <div class="ribben">
+                                                <p>{{product.discount}}% off</p>
+                                            </div>
+                                            <div class="women">
+                                                <h6><a href="productdetails?pid={{product.id}}">{{product.name}}</a></h6>
+                                                <p>
+                                                    <del>₹{{product.mrp}}</del>
+                                                    <em class="item_price">₹{{product.price}}</em></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {%endfor%}
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--content-->
+{% endblock %}

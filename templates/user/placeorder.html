@@ -1,0 +1,55 @@
+{% extends "user/base.html" %}
+{% block content %}
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="home">Home</a> / <span>Place Order</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--login-->
+<div class="login">
+    <div class="main-agileits">
+        {% if message %}
+        <div class="alert alert-{{class}} alert-dismissible slideUp=500">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Message: </strong>{{message}}
+        </div>
+        <script>
+            window.setTimeout(function () {
+                $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 4000);
+        </script>
+        {%endif%}
+        <div class="form-w3agile">
+            <h3>Confirm Order</h3>
+            <form method="post">
+                {%csrf_token%}
+                <div class="key">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" name="bname" placeholder="Contact Person" value="{{user.name}}" required="">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <input type="text" name="bcontact" placeholder="Contact Person Mobile" value="{{user.mobile}}"
+                        required="">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <textarea name="baddress" placeholder="Delivery Address" required="">{{user.address}}</textarea>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <!-- making change here to call decrease_product_quantity function from -->
+                <input type="submit" value="Confirm">
+                <!--till here-->
+            </form>
+        </div>
+    </div>
+</div>
+<!--login-->
+{% endblock %}

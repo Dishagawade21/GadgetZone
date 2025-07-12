@@ -1,0 +1,116 @@
+{% extends "user/base.html" %}
+{% block content %}
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="home">Home</a> / <span>View Cart</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--content-->
+<div class="content">
+    <div class="cart-items">
+        <div class="container">
+            {% if message %}
+            <div class="alert alert-danger alert-dismissible slideUp=500">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Message: </strong>{{message}}
+            </div>
+            <script>
+                window.setTimeout(function () {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 4000);
+            </script>
+            {%endif%}
+            <h2>My Shopping Bag ({{ request.session.cart_count }})</h2>
+            {%for product in cart%}
+            <div class="cart-header">
+                <div class="close11">
+                    <form method="post" >
+                        {%csrf_token%}
+                        <input type="hidden" name="pid" value="{{product.pid}}">
+                        <input type="submit" value="" class="close1" style="border:0px;">
+                    </form>
+                </div>
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <img src="/media/products/{{product.pid}}1.jpg" class="img-responsive" alt="">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3><a href="#"> {{product.name}} </a></h3>
+                        <ul class="qty">
+                            <li>
+                                <p>Price. ₹{{product.price}}</p>
+                            </li>
+                            <li>
+                                <p>
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <input type="hidden" id="pid" value="{{product.pid}}">
+                                        Qty.
+                                        <div class="entry value-minus1">&nbsp;</div>
+                                        <div id="qt" class="entry value1"><span>{{product.qty}}</span></div>
+
+                                        <!-- i made a change here  -->
+                                        <script>
+                                            var qt = document.getElementById("qt");
+                                            sessionStorage.setItem("quantity", qt);
+                                        </script>
+
+                                        <!-- till here -->
+                                        <div class="entry value-plus1 active">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="delivery">
+                            <p>Total : ₹<span class="total">{{product.total}}</span></p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {%endfor%}
+            <!--quantity-->
+            <script>
+                $('.value-plus1').on('click', function () {
+                    var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10) + 1;
+                    divUpd.text(newVal);
+                    pid = $(this).parent().find('#pid').val()
+                    $.post('updateusercartqty', { pid: pid, qty: newVal, csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value },
+                        function (data) {
+                            console.log(data);
+                            window.location.href = "viewusercart";
+                        });
+                });
+
+                $('.value-minus1').on('click', function () {
+                    var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10) - 1;
+                    if (newVal >= 1) divUpd.text(newVal);
+                    pid = $(this).parent().find('#pid').val()
+                    $.post('updateusercartqty', { pid: pid, qty: newVal, csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value },
+                        function (data) {
+                            console.log(data);
+                            window.location.href = "viewusercart";
+                        });
+
+                });
+
+
+
+
+
+            </script>
+            <!--quantity-->
+            <div style="text-align:right;">
+                <h2>Bag Total ₹{{ request.session.cart_total }}</h2>
+                <a href="placeorder" class="btn btn-primary my-cart-b">Place Order</a>
+            </div>
+        </div>
+    </div>
+    <!-- content -->
+</div>
+{% endblock %}

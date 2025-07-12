@@ -1,0 +1,64 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<link href="/static/css/datatables.min.css" rel="stylesheet" type="text/css" media="all"/>
+<script src="/static/js/datatables.min.js"></script>
+<script type="text/javascript">
+		jQuery(document).ready(function($) {
+		$('#orders').DataTable({
+		paging: false,
+        ordering: false,
+        info: true,
+			 });
+		});
+
+
+</script>
+<!--outter-wp-->
+<div class="outter-wp">
+    <!--sub-heard-part-->
+    <div class="sub-heard-part">
+        <ol class="breadcrumb m-b-0">
+            <li><a href="logout">Logout</a></li>
+            <li class="active">View Product</li>
+        </ol>
+    </div>
+    <!--//sub-heard-part-->
+    <!--/forms-->
+    <div class="forms-main">
+        <h3 class="inner-tittle">Product Master</h3>
+        <div class="grid-1">
+            <div class="form-body">
+                <label class="text-info">{{message}}</label>
+                 <div class="table-responsive">
+                <table id="orders" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>
+                            <form method="post">
+                                {%csrf_token%}
+                                <input type="hidden" name="pid" value="{{ product.id }}" required>
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!--//forms-->
+</div>
+<!--//outer-wp-->
+{% endblock %}

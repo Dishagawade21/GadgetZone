@@ -1,0 +1,56 @@
+{% extends "user/base.html" %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/bootstrap-select.css" type="text/css"/>
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<script src="/static/js/bootstrap-select.js"></script>
+<!--banner-->
+<div class="banner1">
+    <div class="container">
+        <h3><a href="home">Home</a> / <span>Contact</span></h3>
+    </div>
+</div>
+<!--banner-->
+<!--login-->
+<div class="login">
+    <div class="main-agileits">
+        {% if message %}
+        <div class="alert alert-{{class}} alert-dismissible slideUp=500">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Message: </strong>{{message}}
+        </div>
+        <script>
+                window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+                });
+            }, 4000);
+
+
+
+        </script>
+        {%endif%}
+        <div class="form-w3agile">
+            <h3>Contact Form</h3>
+            <form method="post">
+                {%csrf_token%}
+                <div class="form-group">
+                    <select name="pname" class="selectpicker form-control" data-live-search="true" required>
+                        <option value="">Select Product</option>
+                        {%for pname in pnames%}
+                        <option value="{{pname}}">{{pname}}</option>
+                        {%endfor%}
+                    </select>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="key">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <textarea name="message" placeholder="Write your message here" required=""></textarea>
+                    <div class="clearfix"></div>
+                </div>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+</div>
+<!--login-->
+{% endblock %}

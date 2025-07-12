@@ -1,0 +1,111 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<!--outter-wp-->
+<div class="outter-wp">
+    <!--sub-heard-part-->
+    <div class="sub-heard-part">
+        <ol class="breadcrumb m-b-0">
+            <li><a href="logout">Logout</a></li>
+            <li class="active">Add Product</li>
+        </ol>
+    </div>
+    <!--//sub-heard-part-->
+    <!--/forms-->
+    <div class="forms-main">
+        <h3 class="inner-tittle">Product Master</h3>
+        <div class="grid-1">
+            <div class="form-body">
+                <form method="post" class="form-horizontal" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <select id="master" name="master" class="form-control1" required>
+                                <option value="">Select Category</option>
+                                {%for category in categories%}
+                                <option value="{{category.name}}">{{category.name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <select id="sub" name="sub" class="form-control1" required>
+                                <option value="">Select Subcategory</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <select name="brand" class="form-control1" required>
+                                <option value="">Select Brand</option>
+                                {%for brand in brands%}
+                                <option value="{{brand.name}}">{{brand.name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="text" name="name" class="form-control1" placeholder="Product Name" required>
+                            <input type="text" name="productcount" class="form-control1" placeholder="Product Quantity" required>
+                            <input type="text" id="mrp" name="mrp" class="form-control1" placeholder="MRP" required>
+                            <input type="text" id="discount" name="discount" class="form-control1"
+                                placeholder="Discount(%)" required>
+                            <input type="text" id="price" name="price" class="form-control1" placeholder="Price"
+                                readonly required>
+                            <textarea name="description" class="form-control" placeholder="Description"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label class="text-primary">Select Product Photo</label><br>
+                            <input type="file" name="photo1" required>
+                            <input type="file" name="photo2" required>
+                            <input type="file" name="photo3" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-default">Save</button>
+                            <label class="text-info">{{message}}</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--//forms-->
+</div>
+<script>
+    $(document).ready(function () {
+        $("#master").change(function () {
+            var master = $('option:selected', this).text()
+            console.log(master);
+            $("#sub option").remove();
+            $("#sub").append("<option value=''>Select Subcategory</option>")
+            $.getJSON("getsubcategories/" + master, null,
+                function (data) {
+                    $.each(JSON.parse(data), function (index, item) {
+                        $("#sub").append('<option value="' + item['fields']['name'] + '">' + item['fields']['name'] + '</option>')
+                        console.log(item['fields']['name']);
+                    });
+                });
+        });
+        $("#mrp").change(function () {
+            $("#discount").val('')
+        });
+        $("#discount").change(function () {
+            var price = $("#mrp").val() - ($("#mrp").val() * $("#discount").val()) / 100
+            $("#price").val(price)
+        });
+    });
+
+
+
+
+
+
+</script>
+<!--//outer-wp-->
+{% endblock %}

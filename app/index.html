@@ -1,0 +1,17 @@
+<!-- template.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Export Example</title>
+</head>
+<body>
+    <h1>Table Data</h1>
+    <!-- Display your table data here -->
+    
+    <!-- Add a button to trigger PDF export -->
+    <form method="post" action="{% url 'generate_pdf' %}">
+        <button type="submit">Export to PDF</button>
+    </form>
+</body>
+</html>
